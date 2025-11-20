@@ -14,16 +14,8 @@ public class ArrayList<E> implements List<E>{
     private void ensureCapacity() {
         if (size == elements.length) {
             int newCapacity = elements.length * 2;
-            elements = manualCopyOf(elements, newCapacity);
+            elements = List.manualCopyOf(elements, newCapacity);
         }
-    }
-    private Object[] manualCopyOf(Object[] oldArray, int newLength) {
-        Object[] newArray = new Object[newLength];
-        int len = Math.min(oldArray.length, newLength);
-        for (int i = 0; i < len; i++) {
-            newArray[i] = oldArray[i];
-        }
-        return newArray;
     }
     @Override
     public int size() {
@@ -42,6 +34,27 @@ public class ArrayList<E> implements List<E>{
         ensureCapacity();
         elements[size++] = e;
         return true;
+    }
+    @Override
+    public void add(int index, E element) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
+        }
+        ensureCapacity();
+        System.arraycopy(elements, index, elements, index+1, size-index);
+        elements[index] = element;
+        size++;
+    }
+    @Override
+    public E remove(int index) {
+        rangeCheck(index);
+        E old = (E) elements[index];
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(elements, index+1, elements, index, numMoved);
+        }
+        elements[--size] = null;
+        return old;
     }
     @Override
     public boolean remove(E e) {
@@ -68,27 +81,6 @@ public class ArrayList<E> implements List<E>{
         @SuppressWarnings("unchecked")
         E old = (E) elements[index];
         elements[index] = element;
-        return old;
-    }
-    @Override
-    public void add(int index, E element) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index: "+index+", Size: "+size);
-        }
-        ensureCapacity();
-        System.arraycopy(elements, index, elements, index+1, size-index);
-        elements[index] = element;
-        size++;
-    }
-    @Override
-    public E remove(int index) {
-        rangeCheck(index);
-        E old = (E) elements[index];
-        int numMoved = size - index - 1;
-        if (numMoved > 0) {
-            System.arraycopy(elements, index+1, elements, index, numMoved);
-        }
-        elements[--size] = null; // help GC
         return old;
     }
     @Override

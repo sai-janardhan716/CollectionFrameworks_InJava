@@ -19,4 +19,12 @@ public interface List<E> extends Collection<E> {
     void add(int index, E element);
     E remove(int index);
     int indexOf(E element);
+    static Object[] manualCopyOf(Object[] oldArray, int newLength) {
+        Object[] newArray = new Object[newLength];
+        int len = Math.min(oldArray.length, newLength);
+        for (int i = 0; i < len; i++) {
+            newArray[i] = oldArray[i];
+        }
+        return newArray;
+    }
 }
