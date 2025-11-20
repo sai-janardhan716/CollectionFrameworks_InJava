@@ -1,4 +1,7 @@
-package Framewok;
+package Framewok.Collection.List;
+
+import Framewok.Collection.Collection;
+
 // List is a first main Interface inherits the Collection interface
 /*
     Collection
@@ -10,7 +13,7 @@ package Framewok;
          |__LinkedList ( LinkedList Class Implements List Interface )
                        ( LinkedList Implements Deque Interface too )
 */
-public interface List<E> extends Collection<E>{
+public interface List<E> extends Collection<E> {
     E get(int index);
     E set(int index, E element);
     void add(int index, E element);

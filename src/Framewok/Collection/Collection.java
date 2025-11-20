@@ -1,4 +1,4 @@
-package Framewok;
+package Framewok.Collection;
 // First Main interface in Collection Framework
 public interface Collection<E>{
         int size();
@@ -6,6 +6,6 @@ public interface Collection<E>{
         boolean contains(E e);
         boolean add(E e);
         boolean remove(E e);
-        void clear();
+        void clearAll();
         E[] toArray();
 }
