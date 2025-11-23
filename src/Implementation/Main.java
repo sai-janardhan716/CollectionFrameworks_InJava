@@ -58,9 +58,6 @@ public class Main {
         linkedHashSet.add(100);
         linkedHashSet.add(200);
         linkedHashSet.add(300);
-        System.out.println("LinkedHashSet insertion order:");
-        for (Integer i : linkedHashSet.toArray()) System.out.print(i + " ");
-        System.out.println();
 
         Map<String, Integer> hashMap = new HashMap<>();
         hashMap.put("A", 1);
