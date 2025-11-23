@@ -1,4 +1,4 @@
-package Framewok.Map;
+package Framework.Map;
 // Second main interface in Collection Framework
 public interface Map<K,V> {
     int size();

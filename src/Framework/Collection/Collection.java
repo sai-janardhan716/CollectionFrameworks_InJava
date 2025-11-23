@@ -1,4 +1,4 @@
-package Framewok.Collection;
+package Framework.Collection;
 // First Main interface in Collection Framework
 public interface Collection<E>{
         int size();

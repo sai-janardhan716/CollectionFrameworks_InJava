@@ -1,6 +1,6 @@
-package Framewok.Collection.List;
+package Framework.Collection.List;
 
-import Framewok.Collection.Collection;
+import Framework.Collection.Collection;
 
 // List is a first main Interface inherits the Collection interface
 /*

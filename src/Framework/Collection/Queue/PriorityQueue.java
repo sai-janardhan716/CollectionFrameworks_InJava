@@ -1,4 +1,4 @@
-package Framewok.Collection.Queue;
+package Framework.Collection.Queue;
 
 import java.util.Arrays;
 import java.util.Comparator;

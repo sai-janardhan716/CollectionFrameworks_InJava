@@ -1,4 +1,4 @@
-package Framewok.Collection.List;
+package Framework.Collection.List;
 
 public class LinkedList<E> implements List<E>{
     private Node<E> head;

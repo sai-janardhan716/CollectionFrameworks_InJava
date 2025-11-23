@@ -1,6 +1,6 @@
-package Framewok.Collection.List;
+package Framework.Collection.List;
 import java.util.Arrays;
-import Framewok.Collection.Collection;
+
 public class Vector<E> implements List<E> {
     private Object[] elements;
     private int size;

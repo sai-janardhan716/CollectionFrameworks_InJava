@@ -1,4 +1,4 @@
-package Framewok.Collection.Queue;
+package Framework.Collection.Queue;
 
 public interface Deque<E> extends Queue<E>{
     void addFirst(E e);

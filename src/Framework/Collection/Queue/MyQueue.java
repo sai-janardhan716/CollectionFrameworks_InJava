@@ -1,6 +1,6 @@
-package Framewok.Collection.Queue;
+package Framework.Collection.Queue;
 
-import Framewok.Collection.List.LinkedList;
+import Framework.Collection.List.LinkedList;
 
 public class MyQueue<E> implements Queue<E>{
     private LinkedList<E> list = new LinkedList<>();

@@ -1,4 +1,4 @@
-package Framewok.Collection.List;
+package Framework.Collection.List;
 public class Stack<E> extends Vector<E> {
     public E push(E item) {
         add(item);

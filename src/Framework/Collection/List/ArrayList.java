@@ -1,4 +1,4 @@
-package Framewok.Collection.List;
+package Framework.Collection.List;
 import java.util.Arrays;
 
 public class ArrayList<E> implements List<E>{

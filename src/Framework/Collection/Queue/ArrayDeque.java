@@ -1,4 +1,4 @@
-package Framewok.Collection.Queue;
+package Framework.Collection.Queue;
 import java.util.Arrays;
 public class ArrayDeque<E> implements Deque<E>{
     private Object[] elements;

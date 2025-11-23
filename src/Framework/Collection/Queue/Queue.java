@@ -1,5 +1,5 @@
-package Framewok.Collection.Queue;
-import Framewok.Collection.Collection;
+package Framework.Collection.Queue;
+import Framework.Collection.Collection;
 
 public interface Queue<E> extends Collection<E> {
     boolean offer(E e);   // add element safely

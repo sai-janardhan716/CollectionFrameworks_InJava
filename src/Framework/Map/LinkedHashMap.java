@@ -1,32 +1,40 @@
-package Framewok.Map;
+package Framework.Map;
 
-public class HashMap<K,V> implements Map<K,V>{
-    static class Node<K, V> {
+public class LinkedHashMap<K,V> implements Map<K, V> {
+    static class Node<K,V> {
         final K key;
         V value;
-        Node<K, V> next;
+        Node<K,V> next;
+        Node<K,V> before;
+        Node<K, V> after;
         Node(K key, V value, Node<K, V> next) {
             this.key = key;
             this.value = value;
             this.next = next;
         }
     }
-    private Node<K, V>[] table;
+
+    private Node<K,V>[] table;
+    private Node<K, V> head;
+    private Node<K,V> tail;
     private int size;
     private int threshold;
     private static final int DEFAULT_CAPACITY = 16;
     private static final float LOAD_FACTOR = 0.75f;
 
-    public HashMap() {
+    public LinkedHashMap() {
         table = new Node[DEFAULT_CAPACITY];
         threshold = (int)(DEFAULT_CAPACITY * LOAD_FACTOR);
     }
+
     private int hash(K key) {
         return (key == null) ? 0 : (key.hashCode() & 0x7fffffff);
     }
+
     private int indexFor(int hash) {
         return hash % table.length;
     }
+
     private boolean equals(K a, K b) {
         return (a == b) || (a != null && a.equals(b));
     }
@@ -38,26 +46,38 @@ public class HashMap<K,V> implements Map<K,V>{
         Node<K, V> current = table[index];
         while (current != null) {
             if (equals(current.key, key)) {
-                V oldVal = current.value;
+                V old = current.value;
                 current.value = value;
-                return oldVal;
+                return old;
             }
             current = current.next;
         }
-        table[index] = new Node<>(key, value, table[index]);
+        Node<K, V> newNode = new Node<>(key, value, table[index]);
+        table[index] = newNode;
+        linkLast(newNode);
         size++;
         if (size > threshold) resize();
         return null;
+    }
+
+    private void linkLast(Node<K,V> node) {
+        if (head == null) {
+            head = tail = node;
+        } else {
+            tail.after = node;
+            node.before = tail;
+            tail = node;
+        }
     }
 
     @Override
     public V get(K key) {
         int hash = hash(key);
         int index = indexFor(hash);
-        Node<K, V> current = table[index];
-        while (current != null) {
-            if (equals(current.key, key)) return current.value;
-            current = current.next;
+        Node<K, V> curr = table[index];
+        while (curr != null) {
+            if (equals(curr.key, key)) return curr.value;
+            curr = curr.next;
         }
         return null;
     }
@@ -72,6 +92,7 @@ public class HashMap<K,V> implements Map<K,V>{
             if (equals(curr.key, key)) {
                 if (prev == null) table[index] = curr.next;
                 else prev.next = curr.next;
+                unlink(curr);
                 size--;
                 return curr.value;
             }
@@ -81,6 +102,15 @@ public class HashMap<K,V> implements Map<K,V>{
         return null;
     }
 
+    private void unlink(Node<K,V> node) {
+        Node<K,V> b = node.before;
+        Node<K,V> a = node.after;
+        if (b == null) head = a;
+        else b.after = a;
+        if (a == null) tail = b;
+        else a.before = b;
+    }
+
     @Override
     public boolean containsKey(K key) {
         return get(key) != null;
@@ -88,13 +118,11 @@ public class HashMap<K,V> implements Map<K,V>{
 
     @Override
     public boolean containsValue(V value) {
-        for (Node<K, V> head : table) {
-            Node<K, V> curr = head;
-            while (curr != null) {
-                if ((value == curr.value) || (value != null && value.equals(curr.value)))
-                    return true;
-                curr = curr.next;
-            }
+        Node<K,V> curr = head;
+        while (curr != null) {
+            if ((value == curr.value) || (value != null && value.equals(curr.value)))
+                return true;
+            curr = curr.after;
         }
         return false;
     }
@@ -112,24 +140,22 @@ public class HashMap<K,V> implements Map<K,V>{
     @Override
     public void clearAll() {
         table = new Node[DEFAULT_CAPACITY];
+        head = tail = null;
         size = 0;
         threshold = (int)(DEFAULT_CAPACITY * LOAD_FACTOR);
     }
 
     private void resize() {
-        Node<K,V>[] oldTable = table;
+        Node<K, V>[] oldTable = table;
         int newCapacity = oldTable.length * 2;
-        Node<K,V>[] newTable = new Node[newCapacity];
-        for (Node<K,V> head : oldTable) {
-            Node<K,V> curr = head;
-            while (curr != null) {
-                Node<K,V> next = curr.next;
-                int newIndex = (curr.key == null ? 0 :
-                        (curr.key.hashCode() & 0x7fffffff) % newCapacity);
-                curr.next = newTable[newIndex];
-                newTable[newIndex] = curr;
-                curr = next;
-            }
+        Node<K, V>[] newTable = new Node[newCapacity];
+        Node<K,V> curr = head;
+        while (curr != null) {
+            int newIndex = (curr.key == null ? 0 :
+                    (curr.key.hashCode() & 0x7fffffff) % newCapacity);
+            curr.next = newTable[newIndex];
+            newTable[newIndex] = curr;
+            curr = curr.after;
         }
         table = newTable;
         threshold = (int)(newCapacity * LOAD_FACTOR);
