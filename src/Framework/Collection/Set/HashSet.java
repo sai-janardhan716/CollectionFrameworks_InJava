@@ -1,13 +1,10 @@
 package Framework.Collection.Set;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class HashSet<E> implements Set<E> {
-
     private static final Object PRESENT = new Object();
     private final Map<E, Object> map;
-
     public HashSet() {
         map = new HashMap<>();
     }
