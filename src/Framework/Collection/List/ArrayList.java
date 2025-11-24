@@ -78,7 +78,6 @@ public class ArrayList<E> implements List<E>{
     @Override
     public E set(int index, E element) {
         rangeCheck(index);
-        @SuppressWarnings("unchecked")
         E old = (E) elements[index];
         elements[index] = element;
         return old;
