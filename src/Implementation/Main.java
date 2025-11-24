@@ -4,6 +4,8 @@ import Framework.Collection.Queue.*;
 import Framework.Collection.Set.*;
 import Framework.Map.*;
 
+import java.util.LinkedHashSet;
+
 public class Main {
     public static void main(String[] args) {
         List<String> arrayList = new ArrayList<>();
@@ -53,11 +55,6 @@ public class Main {
         hashSet.add("Banana");
         hashSet.add("Cherry");
         System.out.println("HashSet contains Banana: " + hashSet.contains("Banana"));
-
-        Set<Integer> linkedHashSet = new LinkedHashSet<>();
-        linkedHashSet.add(100);
-        linkedHashSet.add(200);
-        linkedHashSet.add(300);
 
         Map<String, Integer> hashMap = new HashMap<>();
         hashMap.put("A", 1);
